@@ -9,8 +9,5 @@
         <module name="cteambot" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="cteambot" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
 </project>
