@@ -10,7 +10,12 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.logging.BotLogger;
 
+import java.io.File;
 import java.io.InvalidObjectException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Bot extends TelegramLongPollingBot {
@@ -26,6 +31,7 @@ public class Bot extends TelegramLongPollingBot {
     private static final String ERROR_MESSAGE_TEXT = "There was an error sending the message to channel *%s*, the error was: ```%s```";
 
     private final ConcurrentHashMap<Integer, Integer> userState = new ConcurrentHashMap<Integer, Integer>();
+    private final ArrayList<String> phrases = new ArrayList<String>();
 
     /**
      * Метод для приема сообщений.
@@ -48,17 +54,22 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
+    public Bot() {
+        initPhrases();
+    }
+
     private void handleIncomingMessage(Message message) throws InvalidObjectException {
-        int state = userState.getOrDefault(message.getFrom().getId(), 0);
-        switch (state) {
-            case WAITINGCHANNEL:
-                onWaitingChannelMessage(message);
-                break;
-            default:
-                sendHelpMessage(message.getChatId(), message.getMessageId(), null);
-                userState.put(message.getFrom().getId(), WAITINGCHANNEL);
-                break;
-        }
+        sendRandomMessage(message.getChatId());
+        //int state = userState.getOrDefault(message.getFrom().getId(), 0);
+//        switch (state) {
+//            case WAITINGCHANNEL:
+//                onWaitingChannelMessage(message);
+//                break;
+//            default:
+//                sendHelpMessage(message.getChatId(), message.getMessageId(), null);
+//                userState.put(message.getFrom().getId(), WAITINGCHANNEL);
+//                break;
+//        }
     }
 
     private void onWaitingChannelMessage(Message message) throws InvalidObjectException {
@@ -153,6 +164,20 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
+    private void sendRandomMessage(Long chatId) {
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.enableMarkdown(true);
+            sendMessage.setChatId(chatId);
+
+            String msg = phrases.get(new Random().nextInt(phrases.size()));
+            sendMessage.setText(msg);
+            try {
+                execute(sendMessage);
+            } catch (TelegramApiException e) {
+                BotLogger.error(LOGTAG, e);
+            }
+        }
+
     /**
      * Метод для настройки сообщения и его отправки.
      *
@@ -191,8 +216,27 @@ public class Bot extends TelegramLongPollingBot {
         return "872913315:AAH_yRWw6jb-Th_kW9rdXnzOd3iBb9wkj1M";
     }
 
+    private void initPhrases() {
+        URL url = getClass().getResource("a1.txt");
+        File file = new File(url.getPath());
+        try {
+            Scanner s = new Scanner(file);
+            while (s.hasNext()) {
+                phrases.add(s.next());
+            }
+            s.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //System.out.println(phrases.toString());
+        System.out.println(phrases.size());
+    }
+
     public static void main(String[] args) {
         System.out.println("=================== START =============");
+        //new Bot().initPhrases();
+
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         try {
