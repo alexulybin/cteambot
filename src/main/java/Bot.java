@@ -54,6 +54,7 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     public static void main(String[] args) {
+        System.out.println("=================== START =============");
             ApiContextInitializer.init();
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
             try {
