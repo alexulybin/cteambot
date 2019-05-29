@@ -1,4 +1,4 @@
-import org.telegram.telegrambots.ApiContextInitializer;
+﻿import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
@@ -15,7 +15,7 @@ public class Bot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
 	String message = update.getMessage().getText();
-	sendMsg(update.getMessage().getChatId().toString(), message + " ???");
+	sendMsg(update.getMessage().getChatId().toString(), message + " ??? !!!!!!!!!");
     }
 
     /**
