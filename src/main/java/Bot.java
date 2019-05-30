@@ -240,12 +240,14 @@ try {
     } finally {
         input.close();
     }
-}catch(Exception e){}
+}catch(Exception e){
+    e.printStackTrace();
+}
 
 
 
 
-        File file = new File(url.getFile());
+      /*  File file = new File(url.getFile());
         //File file = new File(url.getPath());
         try {
             Scanner s = new Scanner(file);
@@ -255,7 +257,7 @@ try {
             s.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
         //System.out.println(phrases.toString());
         System.out.println(phrases.size());
