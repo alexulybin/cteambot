@@ -58,7 +58,9 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     private void handleIncomingMessage(Message message) throws InvalidObjectException {
-        sendRandomMessage(message.getChatId());
+        if(message.getText().contains("@Vuster_bot")) {
+            sendRandomMessage(message.getChatId());
+        }
         //int state = userState.getOrDefault(message.getFrom().getId(), 0);
         //        switch (state) {
         //            case WAITINGCHANNEL:
