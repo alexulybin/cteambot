@@ -225,9 +225,9 @@ public class Bot extends TelegramLongPollingBot {
             StringBuilder out = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
-                out.append(line);
+                phrases.add(line);
             }
-            System.out.println(out.toString());   //Prints the string content read from input stream
+            //System.out.println(out.toString());   //Prints the string content read from input stream
             reader.close();
         }catch(Exception e) {
             e.printStackTrace();
