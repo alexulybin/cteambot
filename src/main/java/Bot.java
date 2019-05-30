@@ -168,8 +168,8 @@ public class Bot extends TelegramLongPollingBot {
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
 
-        //String msg = phrases.get(new Random().nextInt(phrases.size()));
-        String msg = "AAAaaaaAAAAaAAAA";
+        String msg = phrases.get(new Random().nextInt(phrases.size()));
+        //String msg = "AAAaaaaAAAAaAAAA";
         sendMessage.setText(msg);
         try {
             execute(sendMessage);
