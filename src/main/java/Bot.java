@@ -10,8 +10,7 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.logging.BotLogger;
 
-import java.io.File;
-import java.io.InvalidObjectException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
@@ -229,6 +228,22 @@ public class Bot extends TelegramLongPollingBot {
         URL url = getClass().getClassLoader().getResource("a1.txt");
         System.out.println("=================== path = " + url.getPath());
         System.out.println("=================== file = " + url.getFile());
+
+try {
+    InputStream input = new BufferedInputStream(new FileInputStream(url.getFile()));
+    byte[] buffer = new byte[8192];
+
+    try {
+        for (int length = 0; (length = input.read(buffer)) != -1; ) {
+            System.out.write(buffer, 0, length);
+        }
+    } finally {
+        input.close();
+    }
+}catch(Exception e){}
+
+
+
 
         File file = new File(url.getFile());
         //File file = new File(url.getPath());
