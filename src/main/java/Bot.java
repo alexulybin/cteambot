@@ -54,9 +54,9 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
-    public Bot() {
-        initPhrases();
-    }
+    //public Bot() {
+    //    initPhrases();
+    //}
 
     private void handleIncomingMessage(Message message) throws InvalidObjectException {
         sendRandomMessage(message.getChatId());
