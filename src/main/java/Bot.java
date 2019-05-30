@@ -218,8 +218,20 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     private void initPhrases() {
-        URL url = getClass().getResource("a1.txt");
-        File file = new File(url.getPath());
+
+//        URL resource = getClass().getClassLoader().getResource("a1.txt");
+//        if (resource == null) {
+//            throw new IllegalArgumentException("file is not found!");
+//        } else {
+//            return new File(resource.getFile());
+//        }
+
+        URL url = getClass().getClassLoader().getResource("a1.txt");
+        System.out.println("=================== path = " + url.getPath());
+        System.out.println("=================== file = " + url.getFile());
+
+        File file = new File(url.getFile());
+        //File file = new File(url.getPath());
         try {
             Scanner s = new Scanner(file);
             while (s.hasNext()) {
