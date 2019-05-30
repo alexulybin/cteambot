@@ -61,15 +61,15 @@ public class Bot extends TelegramLongPollingBot {
     private void handleIncomingMessage(Message message) throws InvalidObjectException {
         sendRandomMessage(message.getChatId());
         //int state = userState.getOrDefault(message.getFrom().getId(), 0);
-//        switch (state) {
-//            case WAITINGCHANNEL:
-//                onWaitingChannelMessage(message);
-//                break;
-//            default:
-//                sendHelpMessage(message.getChatId(), message.getMessageId(), null);
-//                userState.put(message.getFrom().getId(), WAITINGCHANNEL);
-//                break;
-//        }
+        //        switch (state) {
+        //            case WAITINGCHANNEL:
+        //                onWaitingChannelMessage(message);
+        //                break;
+        //            default:
+        //                sendHelpMessage(message.getChatId(), message.getMessageId(), null);
+        //                userState.put(message.getFrom().getId(), WAITINGCHANNEL);
+        //                break;
+        //        }
     }
 
     private void onWaitingChannelMessage(Message message) throws InvalidObjectException {
@@ -165,18 +165,19 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     private void sendRandomMessage(Long chatId) {
-            SendMessage sendMessage = new SendMessage();
-            sendMessage.enableMarkdown(true);
-            sendMessage.setChatId(chatId);
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.enableMarkdown(true);
+        sendMessage.setChatId(chatId);
 
-            String msg = phrases.get(new Random().nextInt(phrases.size()));
-            sendMessage.setText(msg);
-            try {
-                execute(sendMessage);
-            } catch (TelegramApiException e) {
-                BotLogger.error(LOGTAG, e);
-            }
+        //String msg = phrases.get(new Random().nextInt(phrases.size()));
+        String msg = "AAAaaaaAAAAaAAAA";
+        sendMessage.setText(msg);
+        try {
+            execute(sendMessage);
+        } catch (TelegramApiException e) {
+            BotLogger.error(LOGTAG, e);
         }
+    }
 
     /**
      * Метод для настройки сообщения и его отправки.
