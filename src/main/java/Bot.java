@@ -218,6 +218,21 @@ public class Bot extends TelegramLongPollingBot {
 
     private void initPhrases() {
 
+
+        try {
+            InputStream ruleSet = ClassLoader.getSystemResourceAsStream("a1.txt");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(ruleSet));
+            StringBuilder out = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                out.append(line);
+            }
+            System.out.println(out.toString());   //Prints the string content read from input stream
+            reader.close();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+
 //        URL resource = getClass().getClassLoader().getResource("a1.txt");
 //        if (resource == null) {
 //            throw new IllegalArgumentException("file is not found!");
@@ -245,7 +260,7 @@ public class Bot extends TelegramLongPollingBot {
 //}
 
 
-        File file = new File("a1.txt");
+        /*File file = new File("src/resources/a1.txt");
 
 //        File file = new File(url.getFile());
         //File file = new File(url.getPath());
@@ -257,7 +272,7 @@ public class Bot extends TelegramLongPollingBot {
             s.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
         //System.out.println(phrases.toString());
         System.out.println(phrases.size());
