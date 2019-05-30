@@ -225,29 +225,29 @@ public class Bot extends TelegramLongPollingBot {
 //            return new File(resource.getFile());
 //        }
 
-        URL url = getClass().getClassLoader().getResource("a1.txt");
-        System.out.println("=================== path = " + url.getPath());
-        System.out.println("=================== file = " + url.getFile());
-
-try {
-    InputStream input = new BufferedInputStream(new FileInputStream(url.getFile()));
-    byte[] buffer = new byte[8192];
-
-    try {
-        for (int length = 0; (length = input.read(buffer)) != -1; ) {
-            System.out.write(buffer, 0, length);
-        }
-    } finally {
-        input.close();
-    }
-}catch(Exception e){
-    e.printStackTrace();
-}
-
-
+//        URL url = getClass().getClassLoader().getResource("a1.txt");
+//        System.out.println("=================== path = " + url.getPath());
+//        System.out.println("=================== file = " + url.getFile());
+//
+//try {
+//    InputStream input = new BufferedInputStream(new FileInputStream(url.getFile()));
+//    byte[] buffer = new byte[8192];
+//
+//    try {
+//        for (int length = 0; (length = input.read(buffer)) != -1; ) {
+//            System.out.write(buffer, 0, length);
+//        }
+//    } finally {
+//        input.close();
+//    }
+//}catch(Exception e){
+//    e.printStackTrace();
+//}
 
 
-      /*  File file = new File(url.getFile());
+        File file = new File("a1.txt");
+
+//        File file = new File(url.getFile());
         //File file = new File(url.getPath());
         try {
             Scanner s = new Scanner(file);
@@ -257,7 +257,7 @@ try {
             s.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
 
         //System.out.println(phrases.toString());
         System.out.println(phrases.size());
