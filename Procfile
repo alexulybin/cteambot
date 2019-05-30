@@ -1,1 +1,1 @@
-worker: sh target/bin/workerBot
+worker: java $JAVA_OPTS -cp target/classes:target/dependency/* Bot
