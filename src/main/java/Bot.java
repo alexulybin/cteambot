@@ -10,8 +10,7 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.logging.BotLogger;
 
-import java.io.File;
-import java.io.InvalidObjectException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
@@ -54,12 +53,14 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
-    //public Bot() {
-    //    initPhrases();
-    //}
+    public Bot() {
+        initPhrases();
+    }
 
     private void handleIncomingMessage(Message message) throws InvalidObjectException {
-        sendRandomMessage(message.getChatId());
+        if(message.getText().contains("@Vuster_bot")) {
+            sendRandomMessage(message.getChatId());
+        }
         //int state = userState.getOrDefault(message.getFrom().getId(), 0);
         //        switch (state) {
         //            case WAITINGCHANNEL:
@@ -169,8 +170,8 @@ public class Bot extends TelegramLongPollingBot {
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
 
-        //String msg = phrases.get(new Random().nextInt(phrases.size()));
-        String msg = "AAAaaaaAAAAaAAAA";
+        String msg = phrases.get(new Random().nextInt(phrases.size()));
+        //String msg = "AAAaaaaAAAAaAAAA";
         sendMessage.setText(msg);
         try {
             execute(sendMessage);
@@ -218,8 +219,53 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     private void initPhrases() {
-        URL url = getClass().getResource("a1.txt");
-        File file = new File(url.getPath());
+
+
+        try {
+            InputStream ruleSet = ClassLoader.getSystemResourceAsStream("a1.txt");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(ruleSet));
+            StringBuilder out = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                phrases.add(line);
+            }
+            //System.out.println(out.toString());   //Prints the string content read from input stream
+            reader.close();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+
+//        URL resource = getClass().getClassLoader().getResource("a1.txt");
+//        if (resource == null) {
+//            throw new IllegalArgumentException("file is not found!");
+//        } else {
+//            return new File(resource.getFile());
+//        }
+
+//        URL url = getClass().getClassLoader().getResource("a1.txt");
+//        System.out.println("=================== path = " + url.getPath());
+//        System.out.println("=================== file = " + url.getFile());
+//
+//try {
+//    InputStream input = new BufferedInputStream(new FileInputStream(url.getFile()));
+//    byte[] buffer = new byte[8192];
+//
+//    try {
+//        for (int length = 0; (length = input.read(buffer)) != -1; ) {
+//            System.out.write(buffer, 0, length);
+//        }
+//    } finally {
+//        input.close();
+//    }
+//}catch(Exception e){
+//    e.printStackTrace();
+//}
+
+
+        /*File file = new File("src/resources/a1.txt");
+
+//        File file = new File(url.getFile());
+        //File file = new File(url.getPath());
         try {
             Scanner s = new Scanner(file);
             while (s.hasNext()) {
@@ -228,7 +274,7 @@ public class Bot extends TelegramLongPollingBot {
             s.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
         //System.out.println(phrases.toString());
         System.out.println(phrases.size());
