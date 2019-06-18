@@ -79,10 +79,12 @@ public class Bot extends TelegramLongPollingBot {
 
     class CrunchifyReminder extends TimerTask {
         private Long chatId;
+        int loop;
+
         public CrunchifyReminder(Long chatId) {
             this.chatId = chatId;
+            loop = 5;
         }
-        int loop = 5;
 
         public void run() {
             if (loop > 0) {
@@ -90,7 +92,7 @@ public class Bot extends TelegramLongPollingBot {
                 sendRandomMessage(chatId);
                 loop--;
             } else {
-                System.out.println("That's it.. Done..!");
+                System.out.println("That's it.. Done.......!");
                 timer.cancel();
                 timer.purge();
             }
