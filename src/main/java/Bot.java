@@ -61,6 +61,7 @@ public class Bot extends TelegramLongPollingBot {
     private void handleIncomingMessage(Message message) throws InvalidObjectException {
         if(message.getText().contains("@Vuster_bot")) {
 
+            timer = new Timer();
             timer.schedule(new CrunchifyReminder(message.getChatId()), 0, 1 * 1000);
 
             //sendRandomMessage(message.getChatId());
@@ -92,7 +93,7 @@ public class Bot extends TelegramLongPollingBot {
                 sendRandomMessage(chatId);
                 loop--;
             } else {
-                System.out.println("That's it.. Done.......!");
+                System.out.println("That's it.. Done.......!!!!!");
                 timer.cancel();
                 timer.purge();
             }
