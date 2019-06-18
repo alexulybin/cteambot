@@ -90,8 +90,9 @@ public class Bot extends TelegramLongPollingBot {
                 sendRandomMessage(chatId);
                 loop--;
             } else {
-                System.out.format("\nThat's it.. Done..!");
+                System.out.println("That's it.. Done..!");
                 timer.cancel();
+                timer.purge();
             }
         }
     }
