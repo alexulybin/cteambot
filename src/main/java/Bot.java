@@ -12,15 +12,15 @@ import org.telegram.telegrambots.logging.BotLogger;
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Bot extends TelegramLongPollingBot {
     private static final String LOGTAG = "CHANNELHANDLERS";
 
     private static final int WAITINGCHANNEL = 1;
+
+    public Timer timer;
 
     private static final String HELP_TEXT = "Send me the channel username where you added me as admin.";
     private static final String CANCEL_COMMAND = "/stop";
@@ -55,11 +55,15 @@ public class Bot extends TelegramLongPollingBot {
 
     public Bot() {
         initPhrases();
+        timer = new Timer();
     }
 
     private void handleIncomingMessage(Message message) throws InvalidObjectException {
         if(message.getText().contains("@Vuster_bot")) {
-            sendRandomMessage(message.getChatId());
+
+            timer.schedule(new CrunchifyReminder(message.getChatId()), 0, 1 * 1000);
+
+            //sendRandomMessage(message.getChatId());
         }
         //int state = userState.getOrDefault(message.getFrom().getId(), 0);
         //        switch (state) {
@@ -71,6 +75,25 @@ public class Bot extends TelegramLongPollingBot {
         //                userState.put(message.getFrom().getId(), WAITINGCHANNEL);
         //                break;
         //        }
+    }
+
+    class CrunchifyReminder extends TimerTask {
+        private Long chatId;
+        public CrunchifyReminder(Long chatId) {
+            this.chatId = chatId;
+        }
+        int loop = 5;
+
+        public void run() {
+            if (loop > 0) {
+                //System.out.format("Knock Knock..!\n");
+                sendRandomMessage(chatId);
+                loop--;
+            } else {
+                System.out.format("\nThat's it.. Done..!");
+                timer.cancel();
+            }
+        }
     }
 
     private void onWaitingChannelMessage(Message message) throws InvalidObjectException {
@@ -283,6 +306,7 @@ public class Bot extends TelegramLongPollingBot {
     public static void main(String[] args) {
         System.out.println("=================== START =============");
         //new Bot().initPhrases();
+
 
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
