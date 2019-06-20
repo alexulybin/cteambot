@@ -70,7 +70,7 @@ public class Bot extends TelegramLongPollingBot {
         Connection conn = null;
             Statement stmt = null;
 
-        String CREATE_TABLE_SQL="create table test (id int, value varchar2(100));";
+        String CREATE_TABLE_SQL="create table test (id int, value varchar(100));";
 
             try {
 
