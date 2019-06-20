@@ -167,6 +167,7 @@ public class Bot extends TelegramLongPollingBot {
             replyKeyboardMarkup.setKeyboard(keyboard);
             return "Выбрать";
         }
+        return "";
     }
 
     class CrunchifyReminder extends TimerTask {
