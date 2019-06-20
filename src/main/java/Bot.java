@@ -143,8 +143,11 @@ public class Bot extends TelegramLongPollingBot {
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
 
         try {
-            sendMessage.setText(getMessage(text));
-            execute(sendMessage);
+            String mes = getMessage(text);
+            if(!mes.isEmpty()) {
+                sendMessage.setText(mes);
+                execute(sendMessage);
+            }
         } catch (TelegramApiException e) {
             BotLogger.error(LOGTAG, e);
         }
@@ -157,7 +160,7 @@ public class Bot extends TelegramLongPollingBot {
 
         replyKeyboardMarkup.setSelective(false);
         replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(false);
+        replyKeyboardMarkup.setOneTimeKeyboard(true);
         keyboard.clear();
 
         if(msg.equalsIgnoreCase(("Меню"))) {
