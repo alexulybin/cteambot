@@ -10,9 +10,19 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.logging.BotLogger;
 
-import java.io.*;
-import java.net.URL;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.InvalidObjectException;
+import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Bot extends TelegramLongPollingBot {
@@ -56,6 +66,42 @@ public class Bot extends TelegramLongPollingBot {
     public Bot() {
         initPhrases();
         timer = new Timer();
+
+        Connection conn = null;
+            Statement stmt = null;
+
+        String CREATE_TABLE_SQL="create table test (id int, value varchar2(100));";
+
+            try {
+
+              conn = getConnection();
+              stmt = conn.createStatement();
+
+              stmt.executeUpdate(CREATE_TABLE_SQL);
+
+              System.out.println("Table created");
+
+            } catch (SQLException e) {
+              e.printStackTrace();
+            } finally {
+              try {
+                // Close connection
+                if (stmt != null) {
+                  stmt.close();
+                }
+                if (conn != null) {
+                  conn.close();
+                }
+              } catch (Exception e) {
+                e.printStackTrace();
+              }
+            }
+
+    }
+
+    private static Connection getConnection() throws URISyntaxException, SQLException {
+        String dbUrl = System.getenv("JDBC_DATABASE_URL");
+        return DriverManager.getConnection(dbUrl);
     }
 
     private void handleIncomingMessage(Message message) throws InvalidObjectException {
