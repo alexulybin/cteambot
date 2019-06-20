@@ -81,7 +81,7 @@ public class Bot extends TelegramLongPollingBot {
 
               System.out.println("Table created");
 
-            } catch (SQLException e) {
+            } catch (Exception e) {
               e.printStackTrace();
             } finally {
               try {
