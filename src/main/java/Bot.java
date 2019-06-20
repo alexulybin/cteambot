@@ -5,6 +5,7 @@ import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.ForceReplyKeyboard;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
@@ -31,6 +32,7 @@ public class Bot extends TelegramLongPollingBot {
     private static final int WAITINGCHANNEL = 1;
 
     public Timer timer;
+    private ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
 
     private static final String HELP_TEXT = "Send me the channel username where you added me as admin.";
     private static final String CANCEL_COMMAND = "/stop";
@@ -105,13 +107,21 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     private void handleIncomingMessage(Message message) throws InvalidObjectException {
-        if(message.getText().contains("@Vuster_bot")) {
+        sendMessage(message);
 
-            timer = new Timer();
-            timer.schedule(new CrunchifyReminder(message.getChatId()), 0, 1 * 1000);
 
-            //sendRandomMessage(message.getChatId());
-        }
+        //if(message.getText().contains("@Vuster_bot")) {
+
+
+
+            //timer = new Timer();
+            //timer.schedule(new CrunchifyReminder(message.getChatId()), 0, 1 * 1000);
+
+
+
+
+
+        //}
         //int state = userState.getOrDefault(message.getFrom().getId(), 0);
         //        switch (state) {
         //            case WAITINGCHANNEL:
@@ -122,6 +132,41 @@ public class Bot extends TelegramLongPollingBot {
         //                userState.put(message.getFrom().getId(), WAITINGCHANNEL);
         //                break;
         //        }
+    }
+
+    private void sendMessage(Message message) {
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.enableMarkdown(true);
+        sendMessage.setChatId(message.getChatId());
+
+        String text = message.getText();
+        sendMessage.setReplyMarkup(replyKeyboardMarkup);
+
+        try {
+            sendMessage.setText(getMessage(text));
+            execute(sendMessage);
+        } catch (TelegramApiException e) {
+            BotLogger.error(LOGTAG, e);
+        }
+    }
+
+    private String getMessage(String msg) {
+        ArrayList<KeyboardRow> keyboard = new ArrayList<KeyboardRow>();
+        KeyboardRow keyboardRowFirst = new KeyboardRow();
+        //KeyboardRow keyboardRowSecond = new KeyboardRow();
+
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
+
+        if(msg.equalsIgnoreCase(("Меню"))) {
+            keyboard.clear();
+            keyboardRowFirst.clear();
+            keyboardRowFirst.add("Создать напоминание");
+            keyboard.add(keyboardRowFirst);
+            replyKeyboardMarkup.setKeyboard(keyboard);
+            return "Выбрать";
+        }
     }
 
     class CrunchifyReminder extends TimerTask {
