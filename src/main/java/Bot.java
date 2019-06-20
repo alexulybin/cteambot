@@ -140,11 +140,13 @@ public class Bot extends TelegramLongPollingBot {
         sendMessage.setChatId(message.getChatId());
 
         String text = message.getText();
-        sendMessage.setReplyMarkup(replyKeyboardMarkup);
+
 
         try {
             String mes = getMessage(text);
+
             if(!mes.isEmpty()) {
+                sendMessage.setReplyMarkup(replyKeyboardMarkup);
                 sendMessage.setText(mes);
                 execute(sendMessage);
             }
