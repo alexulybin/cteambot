@@ -162,9 +162,9 @@ public class Bot extends TelegramLongPollingBot {
         replyKeyboardMarkup.setResizeKeyboard(true);
         replyKeyboardMarkup.setOneTimeKeyboard(true);
         keyboard.clear();
+        keyboardRowFirst.clear();
 
         if(msg.equalsIgnoreCase(("Меню"))) {
-            keyboardRowFirst.clear();
             keyboardRowFirst.add("Создать напоминание");
             keyboard.add(keyboardRowFirst);
             replyKeyboardMarkup.setKeyboard(keyboard);
