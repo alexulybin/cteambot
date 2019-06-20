@@ -79,7 +79,7 @@ public class Bot extends TelegramLongPollingBot {
               conn = getConnection();
               stmt = conn.createStatement();
 
-              stmt.executeUpdate(CREATE_TABLE_SQL);
+              //stmt.executeUpdate(CREATE_TABLE_SQL);
 
               System.out.println("Table created");
 
@@ -158,9 +158,9 @@ public class Bot extends TelegramLongPollingBot {
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
         replyKeyboardMarkup.setOneTimeKeyboard(false);
+        keyboard.clear();
 
         if(msg.equalsIgnoreCase(("Меню"))) {
-            keyboard.clear();
             keyboardRowFirst.clear();
             keyboardRowFirst.add("Создать напоминание");
             keyboard.add(keyboardRowFirst);
