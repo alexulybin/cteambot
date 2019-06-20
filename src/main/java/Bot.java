@@ -145,11 +145,11 @@ public class Bot extends TelegramLongPollingBot {
         try {
             String mes = getMessage(text);
 
-            if(!mes.isEmpty()) {
+            if(!mes.equals("---")) {
                 sendMessage.setReplyMarkup(replyKeyboardMarkup);
-                sendMessage.setText(mes);
-                execute(sendMessage);
             }
+            sendMessage.setText(mes);
+            execute(sendMessage);
         } catch (TelegramApiException e) {
             BotLogger.error(LOGTAG, e);
         }
@@ -172,7 +172,7 @@ public class Bot extends TelegramLongPollingBot {
             replyKeyboardMarkup.setKeyboard(keyboard);
             return "Выбрать";
         }
-        return "";
+        return "---";
     }
 
     class CrunchifyReminder extends TimerTask {
